@@ -42,20 +42,20 @@ If[N[f[x0]*f[x1]] > 0,
   Print["These values do not satisfy the IVP (no sign change). Please \
 change the values."], 
   For[i = 1, i <= Nmax, i++, 
-   x2 = N[x1 - f[x1]*(x1 - x0)/(f[x1] - f[x0])];
-   If[Abs[x2 - x1] < eps, Print["Converged after ", i, " iterations."];
+   x2 = N[(x0*f[x1] - x1*f[x0])/(f[x1] - f[x0])];
+   If[Abs[f[x2]] < eps, Print["Converged after ", i, " iterations."];
     Print["Root is approximately: ", N[x2]];
-    Print["Estimated error: ", N[Abs[x2 - x1]]];
+    Print["Estimated function error: ", N[Abs[f[x2]]]];
     Break[], 
-    Print[i, "th iteration: x = ", N[x2], ", error = ", 
-      N[Abs[x2 - x1]]];];
-   x0 = x1;
-   x1 = x2;];
+    Print[i, "th iteration: x = ", N[x2], ", f(x) = ", N[f[x2]], 
+      ", error estimate = ", N[Abs[f[x2]]]];];
+   If[f[x0]*f[x2] < 0, x1 = x2, x0 = x2];];
   If[i > Nmax, Print["Did not converge within ", Nmax, " iterations."];
    Print["Last approximation is: ", x2];
-   Print["Estimated error is: ", N[Abs[x2 - x1]]];];
+   Print["Estimated function error is: ", N[Abs[f[x2]]]];];
   Plot[f[x], {x, Min[x0, x1] - 1, Max[x0, x1] + 1}, 
    PlotLabel -> "Plot of f(x) = Cos[x]", AxesLabel -> {"x", "f(x)"}]];
+
 
 
 ```
