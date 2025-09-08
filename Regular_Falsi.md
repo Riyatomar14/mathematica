@@ -20,7 +20,7 @@ If[N[f[x0]*f[x1]] > 0,
    If[f[x2]*f[x1] > 0, x1 = x2, x0 = x2]]];
 Print["root is:", N[x2]];
 Print["estimated error is ", N[x1 - x0]];
-Plot[f[x], {x, -1, 3
+Plot[f[x], {x, -1, 3}]
 
 ```
 ### Question no-2
