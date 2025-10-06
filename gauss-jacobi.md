@@ -63,3 +63,23 @@ X0 = {0.5, -0.5, -0.5};
 
 GaussJacobi[A, b, X0, 15]
 ```
+
+```matlab
+GaussJacobiMatrixForm[A0_, b0_, x0_, maxiter_] := 
+  Module[{A = N[A0], b = N[b0], xk = x0, k = 0, D, R, Dinv, 
+    OutputDetails}, D = DiagonalMatrix[Diagonal[A]]; R = A - D; 
+   Dinv = Inverse[D]; OutputDetails = {xk}; 
+   While[k < maxiter, xk = Dinv.(b - R.xk); 
+    OutputDetails = Append[OutputDetails, xk];
+    k++;];
+   colHeading = Table[Subscript[x, s], {s, 1, Length[x0]}];
+   Print[NumberForm[
+     TableForm[OutputDetails, TableHeadings -> {None, colHeading}], 
+     6]];
+   Print["No. of iterations performed: ", maxiter];];
+A = {{5, 1, 2}, {-3, 9, 4}, {1, 2, -7}};
+b = {10, -14, -33};
+X0 = {0, 0, 0};
+
+GaussJacobiMatrixForm[A, b, X0, 15]
+```
